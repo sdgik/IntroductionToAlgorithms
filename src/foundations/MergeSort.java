@@ -9,40 +9,47 @@ public class MergeSort {
         System.out.println(Arrays.toString(a));
     }
 
-    private static void mergeSort(int[] a, int p, int r) {
-        if (p < r) {
-            int q = (p + r) >> 1;
-            mergeSort(a, p, q);
-            mergeSort(a, q + 1, r);
-            merge(a, p, q, r);
+    private static void mergeSort(int[] a, int l, int r) {
+        if (l < r) {
+            int m = (l + r) >> 1;
+            mergeSort(a, l, m);
+            mergeSort(a, m + 1, r);
+            merge(a, l, m, r);
         }
     }
 
-    private static void merge(int[] a, int p, int q, int r) {
-        int n1 = q - p + 1;
-        int n2 = r - q;
-        int[] L = new int[n1 + 1];
-        int[] R = new int[n2 + 1];
+    private static void merge(int[] a, int l, int m, int r) {
+        int n1 = m - l + 1;
+        int n2 = r - m;
+        int[] L = new int[n1];
+        int[] R = new int[n2];
 
         for (int i = 0; i < n1; i++) {
-            L[i] = a[p + i - 1];
+            L[i] = a[l + i];
         }
         for (int j = 0; j < n2; j++) {
-            R[j] = a[q + j];
+            R[j] = a[m + j + 1];
         }
-        L[n1 + 1] = Integer.MAX_VALUE;
-        R[n2 + 1] = Integer.MAX_VALUE;
 
-        int i = 1;
-        int j = 1;
-        for (int k = p; k < r; k++) {
+        int i = 0;
+        int j = 0;
+        int k = l;
+        while (i < n1 && j < n2) {
             if (L[i] <= R[j]) {
-                a[k] = L[i];
-                i++;
+                a[k] = L[i++];
             } else {
-                a[k] = R[j];
-                j++;
+                a[k] = R[j++];
             }
+            k++;
+        }
+
+        while (i < n1) {
+            a[k] = L[i++];
+            k++;
+        }
+        while (j < n2) {
+            a[k] = R[j++];
+            k++;
         }
     }
 }
