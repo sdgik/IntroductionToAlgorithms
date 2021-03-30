@@ -30,7 +30,7 @@ public class QuickSort {
     private static int randomizedPartition(int[] a, int p, int r) {
         int i =  ThreadLocalRandom.current().nextInt(p, r + 1);
         swap(a, r, i);
-        return partition(a, p, r);
+        return hoarePartition(a, p, r);
     }
 
     private static int partition(int[] a, int p, int r) {
@@ -43,6 +43,25 @@ public class QuickSort {
         }
         swap(a, i + 1, r);
         return i + 1;
+    }
+
+    private static int hoarePartition(int[] a, int p, int r) {
+        int x = a[p];
+        int i = p - 1;
+        int j = r + 1;
+        while(true) {
+            do {
+                j--;
+            } while (a[j] > x);
+            do {
+                i++;
+            } while (a[i] < x);
+            if (i < j) {
+                swap(a, i, j);
+            } else {
+                return j;
+            }
+        }
     }
 
     private static void swap(int[] a, int i, int j) {
