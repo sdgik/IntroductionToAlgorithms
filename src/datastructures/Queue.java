@@ -1,7 +1,9 @@
 package datastructures;
 
+/**
+ * TODO: need refactoring for object structure
+ */
 public class Queue {
-
     private int tail;
     private int head;
     private int[] queueArray;
@@ -23,5 +25,20 @@ public class Queue {
     public void enqueue(int x) {
         this.queueArray[this.tail] = x;
         this.nItems++;
+        if (this.nItems == this.tail) {
+            this.tail = 1;
+        } else {
+            this.head++;
+        }
+    }
+
+    public int dequeue() {
+        int x = this.queueArray[this.head];
+        if (this.head == this.nItems) {
+            this.head = 1;
+        } else {
+            this.head++;
+        }
+        return x;
     }
 }
